@@ -42,7 +42,7 @@ products.forEach((product) => {
 
         <div class="product-spacer"></div>
 
-        <div class="added-to-cart">
+        <div class="added-to-cart js-added-massage${product.id}">
         <img src="images/icons/checkmark.png">
         Added
         </div>
@@ -63,6 +63,15 @@ addButton.forEach((Button) => {
                 repeat = item;
             }
         })
+        const displayAdded = document.querySelector(`.js-added-massage${Button.dataset.itemId}`)
+        displayAdded.classList.add('added-to-cart-display');
+        let timeOutId;
+        if (timeOutId){
+            clearTimeout(timeOutId);
+        }
+        timeOutId = setTimeout(( ) => {
+            displayAdded.classList.remove('added-to-cart-display')
+        }, 2000);
         const quantitySelector = Number(document.querySelector(`.js-quantity-selector-${Button.dataset.itemId}`).value)
         if (repeat) {
             repeat.quantity += quantitySelector;
@@ -75,7 +84,6 @@ addButton.forEach((Button) => {
         let cartQuantity = 0;
         cart.forEach((item) => {
             cartQuantity += item.quantity;
-        console.log(cart);
         cartDisplay.innerText = cartQuantity;
         })
     })
