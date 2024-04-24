@@ -46,7 +46,7 @@ products.forEach((product) => {
         Added
         </div>
 
-        <button class="add-to-cart-button button-primary js-add-button" data-item-name="${product.name}">
+        <button class="add-to-cart-button button-primary js-add-button" data-item-id="${product.id}">
         Add to Cart
         </button>
     </div>
@@ -58,7 +58,7 @@ addButton.forEach((Button) => {
     Button.addEventListener('click', () => {
         let repeat;
         cart.forEach((item) => {
-            if (item.name === Button.dataset.itemName) {
+            if (item.id === Button.dataset.itemId) {
                 repeat = item;
             }
         })
@@ -66,8 +66,9 @@ addButton.forEach((Button) => {
             repeat.quantity += 1;
         } else {
             cart.push({
-                name: Button.dataset.itemName,
+                id: Button.dataset.itemId,
                 quantity: 1
             })
         }
+        console.log(cart);
 })})
