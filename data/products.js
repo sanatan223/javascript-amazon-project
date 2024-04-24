@@ -1,5 +1,25 @@
 const products = [
   {
+    id: "96yd6z9g44vm5kt3q2svd53zb9p4lpnv",
+    image: "images/products/HP-Laptop-15s.jpg",
+    name: "HP Laptop 15s, AMD Ryzen 3 5300U, 15.6-inch (39.6 cm), FHD, 8GB DDR4, 512GB SSD",
+    rating: {
+      stars: 4.0,
+      count: 1304
+    },
+    priceCents: 38638
+  },
+  {
+    id: "A98DB973KWL8XP1LZ94KJF0BMA5PEZ8C",
+    image: "images/products/infinix-hot-30i.jpg",
+    name: "Infinix HOT 30i (Mirror Black, 8GB RAM 128GB Storage)",
+    rating:{
+      stars: 4,
+      count: 342
+    },
+    priceCents: 10801
+  },
+  {
     id: "e43638ce-6aa0-4b85-b27f-e1d07eb678c6",
     image: "images/products/athletic-cotton-socks-6-pairs.jpg",
     name: "Black and Gray Athletic Cotton Socks - 6 Pairs",
