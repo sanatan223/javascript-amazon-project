@@ -1,4 +1,5 @@
 const productGrid = document.querySelector('.js-product-grid')
+const cartDisplay = document.querySelector('.js-cart-quantity')
 let productHTML = '';
 products.forEach((product) => {
     productHTML += `
@@ -21,11 +22,11 @@ products.forEach((product) => {
         </div>
 
         <div class="product-price">
-        $${(product.priceCent/100).toFixed(2)}
+        $${(product.priceCents/100).toFixed(2)}
         </div>
 
         <div class="product-quantity-container">
-        <select>
+        <select class="js-quantity-selector-${product.id}">
             <option selected value="1">1</option>
             <option value="2">2</option>
             <option value="3">3</option>
@@ -62,13 +63,20 @@ addButton.forEach((Button) => {
                 repeat = item;
             }
         })
+        const quantitySelector = Number(document.querySelector(`.js-quantity-selector-${Button.dataset.itemId}`).value)
         if (repeat) {
-            repeat.quantity += 1;
+            repeat.quantity += quantitySelector;
         } else {
             cart.push({
                 id: Button.dataset.itemId,
-                quantity: 1
+                quantity: quantitySelector
             })
         }
+        let cartQuantity = 0;
+        cart.forEach((item) => {
+            cartQuantity += item.quantity;
         console.log(cart);
-})})
+        cartDisplay.innerText = cartQuantity;
+        })
+    })
+})
