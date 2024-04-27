@@ -1,5 +1,5 @@
 import {products} from "../data/products.js";
-import {cart} from "../data/productCart.js";
+import {cart, addToCart, updateCartQuantity} from "../data/productCart.js";
 const productGrid = document.querySelector('.js-product-grid')
 const cartDisplay = document.querySelector('.js-cart-quantity')
 let productHTML = '';
@@ -59,34 +59,8 @@ productGrid.innerHTML = productHTML;
 const addButton = document.querySelectorAll('.js-add-button');
 addButton.forEach((Button) => {
     Button.addEventListener('click', () => {
-        let repeat;
-        cart.forEach((item) => {
-            if (item.id === Button.dataset.itemId) {
-                repeat = item;
-            }
-        })
-        const displayAdded = document.querySelector(`.js-added-massage${Button.dataset.itemId}`)
-        displayAdded.classList.add('added-to-cart-display');
-        let timeOutId;
-        if (timeOutId){
-            clearTimeout(timeOutId);
-        }
-        timeOutId = setTimeout(( ) => {
-            displayAdded.classList.remove('added-to-cart-display')
-        }, 2000);
-        const quantitySelector = Number(document.querySelector(`.js-quantity-selector-${Button.dataset.itemId}`).value)
-        if (repeat) {
-            repeat.quantity += quantitySelector;
-        } else {
-            cart.push({
-                id: Button.dataset.itemId,
-                quantity: quantitySelector
-            })
-        }
-        let cartQuantity = 0;
-        cart.forEach((item) => {
-            cartQuantity += item.quantity;
-        cartDisplay.innerText = cartQuantity;
-        })
+        let itemId = Button.dataset.itemId;
+        addToCart(itemId);
     })
 })
+cartDisplay.innerText = updateCartQuantity();

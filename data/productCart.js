@@ -1,7 +1,54 @@
-export const cart = [{
-    id: "A98DB973KWL8XP1LZ94KJF0BMA5PEZ8C",
-    quantity: 1
-}, {
-    id: "e43638ce-6aa0-4b85-b27f-e1d07eb678c6",
-    quantity: 2
+export const cart = JSON.parse(localStorage.getItem('cart')) || [{
 }];
+
+function saveToStorage(){
+    localStorage.setItem('cart', JSON.stringify(cart));
+}
+
+export function addToCart(itemId){
+    let repeat;
+    cart.forEach((item) => {
+        if (item.id === itemId) {
+            repeat = item;
+        }
+    })
+    const displayAdded = document.querySelector(`.js-added-massage${itemId}`)
+    displayAdded.classList.add('added-to-cart-display');
+    let timeOutId;
+    if (timeOutId){
+        clearTimeout(timeOutId);
+    }
+    timeOutId = setTimeout(( ) => {
+        displayAdded.classList.remove('added-to-cart-display')
+    }, 2000);
+    const quantitySelector = Number(document.querySelector(`.js-quantity-selector-${itemId}`).value)
+    if (repeat) {
+        repeat.quantity += quantitySelector;
+    } else {
+        cart.push({
+            id: itemId,
+            quantity: quantitySelector
+        })
+    }
+
+    saveToStorage();
+    location.reload();
+}
+
+export function removeFromCart(itemId){
+    cart.forEach((item, i) => {
+        if (item.id === itemId){
+            cart.splice(i, 1);
+        } 
+    })
+    saveToStorage();
+    location.reload();
+}
+
+export function updateCartQuantity(){
+    let itemInCart = 0;
+    cart.forEach((item) => {
+    itemInCart += item.quantity;
+    })
+    return itemInCart;
+}
