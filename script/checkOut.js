@@ -1,4 +1,4 @@
-import {cart, removeFromCart, updateCartQuantity} from "../data/productCart.js";
+import {cart, removeFromCart, updateCartQuantity, updateQuantity} from "../data/productCart.js";
 import {products} from "../data/products.js";
 
 let checkOutHtml = '';
@@ -28,10 +28,14 @@ cart.forEach((item) => {
                 </div>
                 <div class="product-quantity">
                   <span>
-                    Quantity: <span class="quantity-label">2</span>
+                    Quantity: <span class="quantity-label js-quantity-label${item.id}">1</span>
                   </span>
-                  <span class="update-quantity-link link-primary">
+                  <span class="update-quantity-link link-primary js-update-link" data-update-link-id=${item.id}>
                     Update
+                  </span>
+                  <input class="quantity-input js-quantity-input" type="text">
+                  <span class="link-primary save-quantity-link js-save-button" data-save-item-id=${item.id}>
+                  save
                   </span>
                   <span class="delete-quantity-link link-primary js-delete-button" data-delete-button-id=${item.id}>
                     Delete
@@ -97,5 +101,36 @@ deleteButton.forEach((button) => {
     document.querySelector(`.js-delete-item${itemId}`).remove();
   })
 }) 
+
+document.querySelector('.js-cart-quantity').innerText = updateCartQuantity();
+
+const updateButton = document.querySelectorAll('.js-update-link')
+const cartItemContainer = document.querySelector('.cart-item-container');
+updateButton.forEach((button) => {
+  let itemId = button.dataset.updateLinkId;
+  button.addEventListener('click', () => {
+    cartItemContainer.classList.add("is-editing-quantity")
+  })
+})
+
+const quantityInput = document.querySelector('.js-quantity-input')
+const saveButton = document.querySelectorAll('.js-save-button');
+saveButton.forEach((button) => {
+  let itemId = button.dataset.saveItemId
+
+  button.addEventListener('click', () => {
+    console.log(event)
+    let inputNum = Number(quantityInput.value);
+    updateQuantity(itemId, inputNum);
+    const quantityLabel = document.querySelector(`.js-quantity-label${itemId}`)
+    if (0 <= inputNum && inputNum < 1000){
+      quantityLabel.innerText = inputNum;
+      document.querySelector('.js-cart-quantity').innerText = updateCartQuantity();
+      cartItemContainer.classList.remove("is-editing-quantity")
+    } else {
+      quantityInput.classList.add("large-quantity")
+    }
+  })
+})
 
 document.querySelector('.js-cart-quantity').innerText = updateCartQuantity();

@@ -52,3 +52,12 @@ export function updateCartQuantity(){
     })
     return itemInCart;
 }
+
+export function updateQuantity(productId, newQuantity) {
+    cart.forEach((item) => {
+        if (item.id = productId){
+            item.quantity = newQuantity
+        }
+    })
+    saveToStorage();
+}
