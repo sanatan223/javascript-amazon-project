@@ -1,5 +1,12 @@
 export const cart = JSON.parse(localStorage.getItem('cart')) || [{
-}];
+    id: "96yd6z9g44vm5kt3q2svd53zb9p4lpnv",
+    quantity: 1,
+    deliveryOptionId: 1
+  },{
+    id: "A98DB973KWL8XP1LZ94KJF0BMA5PEZ8C",
+    quantity: 1,
+    deliveryOptionId: 2
+  }];
 
 function saveToStorage(){
     localStorage.setItem('cart', JSON.stringify(cart));
