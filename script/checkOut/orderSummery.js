@@ -2,6 +2,8 @@ import {cart, removeFromCart, updateCartQuantity, updateQuantity, updateDelivery
 import {products} from "../../data/products.js";
 import {deliveryOption} from "../../data/delivery-options.js";
 import dayjs from "https://unpkg.com/dayjs@1.11.10/esm/index.js";
+import { formatPricing } from "../../data/utills/pricing.js";
+import { renderPaymentSummery } from "./paymentSummery.js";
 
 export function renderWebsite(){
 
@@ -37,7 +39,7 @@ export function renderWebsite(){
             ${matchItem.name}
           </div>
           <div class="product-price">
-            $${(matchItem.priceCents/100).toFixed(2)}
+            $${formatPricing(matchItem.priceCents)}
           </div>
           <div class="product-quantity">
             <span>
@@ -96,7 +98,7 @@ export function renderWebsite(){
   function shippingPrice(option){
     const phrase = option.priceCents === 0
     ?"Free"
-    :(option.priceCents/100).toFixed(2)
+    :formatPricing(option.priceCents)
   
     return phrase
   }

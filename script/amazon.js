@@ -1,5 +1,7 @@
 import {products} from "../data/products.js";
-import {cart, addToCart, updateCartQuantity} from "../data/productCart.js";
+import {addToCart, updateCartQuantity} from "../data/productCart.js";
+import { formatPricing } from "../data/utills/pricing.js";
+
 const productGrid = document.querySelector('.js-product-grid')
 const cartDisplay = document.querySelector('.js-cart-quantity')
 
@@ -27,7 +29,7 @@ function renderwebsite(){
             </div>
     
             <div class="product-price">
-            $${(product.priceCents/100).toFixed(2)}
+            $${formatPricing(product.priceCents)}
             </div>
     
             <div class="product-quantity-container">
