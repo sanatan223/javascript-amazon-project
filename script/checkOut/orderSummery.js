@@ -110,6 +110,8 @@ export function renderWebsite(){
       itemId = button.dataset.deleteButtonId;
       removeFromCart(itemId);
       document.querySelector(`.js-delete-item${itemId}`).remove();
+      renderPaymentSummery();
+
     })
   }) 
   
@@ -150,6 +152,7 @@ export function renderWebsite(){
       const {productId, deliveryOptionId} = option.dataset;
       updateDeliveryOption(productId, deliveryOptionId);
       renderWebsite();
+      renderPaymentSummery();
     })
   })
 }
