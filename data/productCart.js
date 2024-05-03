@@ -39,7 +39,6 @@ export function addToCart(itemId){
     }
 
     saveToStorage();
-    location.reload();
 }
 
 export function removeFromCart(itemId){
@@ -66,5 +65,18 @@ export function updateQuantity(productId, newQuantity) {
             item.quantity = newQuantity
         }
     })
+    saveToStorage();
+}
+
+export function updateDeliveryOption(productId, deliveryOptionId){
+    let repeat;
+    cart.forEach((item) => {
+        if (item.id === productId) {
+            repeat = item;
+        }
+    })
+
+    repeat.deliveryOptionId = Number(deliveryOptionId);
+
     saveToStorage();
 }
