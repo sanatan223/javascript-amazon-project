@@ -72,26 +72,31 @@ export function renderWebsite(){
   function deliveryOptions(matchItem, item){
     const today = dayjs()
     let optionsHtml = '';
+    
     deliveryOption.forEach((option) => {
-      const deliveryDate = today.add(option.deliveryDays, 'day').format('dddd, MMMM DD')
-      const isChecked = option.id === item.deliveryOptionId;
-      optionsHtml += `
-      <div class="delivery-option js-delivery-dates"
-      data-product-id=${matchItem.id}
-      data-delivery-option-id=${option.id}>
-        <input type="radio" 
-        ${isChecked ? "checked" : ""}
-          class="delivery-option-input"
-          name="delivery-option-${matchItem.id}">
-        <div>
-          <div class="delivery-option-date">
-            ${deliveryDate}
+      const deliverydate = today.add(option.deliveryDays, 'day');
+      let deliveryDate = deliverydate.format('dddd, MMMM DD');
+      if ((deliverydate.format('dddd') !== "Saturday") && (deliverydate.format('dddd') !== "Sunday")){
+        
+        const isChecked = option.id === item.deliveryOptionId;
+        optionsHtml += `
+        <div class="delivery-option js-delivery-dates"
+        data-product-id=${matchItem.id}
+        data-delivery-option-id=${option.id}>
+          <input type="radio" 
+          ${isChecked ? "checked" : ""}
+            class="delivery-option-input"
+            name="delivery-option-${matchItem.id}">
+          <div>
+            <div class="delivery-option-date">
+              ${deliveryDate}
+            </div>
+            <div class="delivery-option-price">
+              ${shippingPrice(option)} Shipping
+            </div>
           </div>
-          <div class="delivery-option-price">
-            ${shippingPrice(option)} Shipping
-          </div>
-        </div>
-      </div>`
+        </div>`
+      }
     })
     return optionsHtml;
   }
