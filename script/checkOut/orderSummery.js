@@ -4,6 +4,7 @@ import {deliveryOption} from "../../data/delivery-options.js";
 import dayjs from "https://unpkg.com/dayjs@1.11.10/esm/index.js";
 import { formatPricing } from "../../data/utills/pricing.js";
 import { renderPaymentSummery } from "./paymentSummery.js";
+import { renderCheckoutHeader } from "./checkoutHeader.js";
 
 export function renderWebsite(){
 
@@ -114,8 +115,6 @@ export function renderWebsite(){
     })
   }) 
   
-  document.querySelector('.js-cart-quantity').innerText = updateCartQuantity();
-  
   const updateButton = document.querySelectorAll('.js-update-link')
   const cartItemContainer = document.querySelector('.cart-item-container');
   updateButton.forEach((button) => {
@@ -135,14 +134,14 @@ export function renderWebsite(){
       const quantityLabel = document.querySelector(`.js-quantity-label${itemId}`)
       if (0 <= inputNum && inputNum < 1000){
         quantityLabel.innerText = inputNum;
-        document.querySelector('.js-cart-quantity').innerText = updateCartQuantity();
+        renderCheckoutHeader();
         cartItemContainer.classList.remove("is-editing-quantity")
       } else {
         quantityInput.classList.add("large-quantity")
       }
     })
   })
-  document.querySelector('.js-cart-quantity').innerText = updateCartQuantity();
+  renderCheckoutHeader();
   
   document.querySelectorAll('.js-delivery-dates')
   .forEach((option) => {
