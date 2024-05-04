@@ -61,7 +61,7 @@ export function updateCartQuantity(){
 
 export function updateQuantity(productId, newQuantity) {
     cart.forEach((item) => {
-        if (item.id = productId){
+        if (item.id === productId){
             item.quantity = newQuantity
         }
     })

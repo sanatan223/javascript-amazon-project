@@ -45,7 +45,7 @@ export function renderWebsite(){
             <span>
               Quantity: <span class="quantity-label js-quantity-label${matchItem.id}">1</span>
             </span>
-            <span class="update-quantity-link link-primary js-update-link" data-update-link-id=${item.id}>
+            <span class="update-quantity-link link-primary js-update-link">
               Update
             </span>
             <input class="quantity-input js-quantity-input" type="text">
@@ -111,7 +111,6 @@ export function renderWebsite(){
       removeFromCart(itemId);
       document.querySelector(`.js-delete-item${itemId}`).remove();
       renderPaymentSummery();
-
     })
   }) 
   
@@ -120,7 +119,6 @@ export function renderWebsite(){
   const updateButton = document.querySelectorAll('.js-update-link')
   const cartItemContainer = document.querySelector('.cart-item-container');
   updateButton.forEach((button) => {
-    let itemId = button.dataset.updateLinkId;
     button.addEventListener('click', () => {
       cartItemContainer.classList.add("is-editing-quantity")
     })
@@ -129,7 +127,7 @@ export function renderWebsite(){
   const quantityInput = document.querySelector('.js-quantity-input')
   const saveButton = document.querySelectorAll('.js-save-button');
   saveButton.forEach((button) => {
-    let itemId = button.dataset.saveItemId
+    let itemId = button.dataset.saveItemId;
   
     button.addEventListener('click', () => {
       let inputNum = Number(quantityInput.value);
