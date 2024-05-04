@@ -5,6 +5,7 @@ import dayjs from "https://unpkg.com/dayjs@1.11.10/esm/index.js";
 import { formatPricing } from "../../data/utills/pricing.js";
 import { renderPaymentSummery } from "./paymentSummery.js";
 import { renderCheckoutHeader } from "./checkoutHeader.js";
+import { calculateDeliveryDate } from "../../data/delivery-options.js";
 
 export function renderWebsite(){
 
@@ -17,13 +18,7 @@ export function renderWebsite(){
       }
     })
     
-    let selectedOption = '';
-    deliveryOption.forEach((option) => {
-      if (option.id === item.deliveryOptionId){
-        selectedOption = option
-      }
-    })
-    const selectedOptionDate = dayjs().add(selectedOption.deliveryDays, 'day').format('dddd, MMMM DD')
+    const selectedOptionDate = calculateDeliveryDate(item);
     
     checkOutHtml += `
     <div class="cart-item-container js-delete-item${matchItem.id}">
@@ -74,29 +69,31 @@ export function renderWebsite(){
     let optionsHtml = '';
     
     deliveryOption.forEach((option) => {
-      const deliverydate = today.add(option.deliveryDays, 'day');
-      let deliveryDate = deliverydate.format('dddd, MMMM DD');
-      if ((deliverydate.format('dddd') !== "Saturday") && (deliverydate.format('dddd') !== "Sunday")){
-        
-        const isChecked = option.id === item.deliveryOptionId;
-        optionsHtml += `
-        <div class="delivery-option js-delivery-dates"
-        data-product-id=${matchItem.id}
-        data-delivery-option-id=${option.id}>
-          <input type="radio" 
-          ${isChecked ? "checked" : ""}
-            class="delivery-option-input"
-            name="delivery-option-${matchItem.id}">
-          <div>
-            <div class="delivery-option-date">
-              ${deliveryDate}
-            </div>
-            <div class="delivery-option-price">
-              ${shippingPrice(option)} Shipping
-            </div>
-          </div>
-        </div>`
+      let deliverydate = today.add(option.deliveryDays, 'day');
+      if (deliverydate.format('dddd') === "Saturday"){
+        deliverydate = today.add(option.deliveryDays +2, 'day')
+      }else if (deliverydate.format('dddd') === "Sunday"){
+        deliverydate = today.add(option.deliveryDays +1, 'day')
       }
+      const deliveryDate = deliverydate.format('dddd, MMMM DD');
+      const isChecked = option.id === item.deliveryOptionId;
+      optionsHtml += `
+      <div class="delivery-option js-delivery-dates"
+      data-product-id=${matchItem.id}
+      data-delivery-option-id=${option.id}>
+        <input type="radio" 
+        ${isChecked ? "checked" : ""}
+          class="delivery-option-input"
+          name="delivery-option-${matchItem.id}">
+        <div>
+          <div class="delivery-option-date">
+            ${deliveryDate}
+          </div>
+          <div class="delivery-option-price">
+            ${shippingPrice(option)} Shipping
+          </div>
+        </div>
+      </div>`
     })
     return optionsHtml;
   }
